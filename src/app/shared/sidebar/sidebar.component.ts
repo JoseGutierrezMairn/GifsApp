@@ -17,6 +17,9 @@ export class SidebarComponent {
   }
 
   constructor(private gifService: GifsService){
+    
+    const temp: string = localStorage.getItem('history') || '';
+    this.gifService.history = temp.length > 0 ? JSON.parse(temp) : [];
   }
 
 }

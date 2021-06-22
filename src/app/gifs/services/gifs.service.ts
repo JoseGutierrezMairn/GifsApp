@@ -17,6 +17,10 @@ export class GifsService {
     return [...this._history];
   }
 
+  set history(history: string[]){
+    this._history = history;
+  }
+
   searchGifs(query: string = ''): void{
     query = query.trim().toLowerCase();
     if(!this._history.includes(query)){
@@ -24,6 +28,7 @@ export class GifsService {
       
       this._history.unshift(query);
       this._history = this._history.slice(0, 10);
+      this.useLocalStorage();
     }
     
     const params = new HttpParams()
@@ -38,6 +43,12 @@ export class GifsService {
     });
 
   }
+
+
+  useLocalStorage(): void{
+    localStorage.setItem('history', JSON.stringify(this._history));
+  }
+
 
 
   constructor(private http: HttpClient) { }
